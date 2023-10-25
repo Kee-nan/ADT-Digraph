@@ -74,10 +74,10 @@ std::stack<int> Digraph::topologicalSort() {
             topologicalSortUtil(i, visited, Stack);
 
     // Print contents of stack
-    while (!Stack.empty()) {
-        std::cout << Stack.top() << " ";
-        Stack.pop();
-    }
+    //while (!Stack.empty()) {
+        //std::cout << Stack.top() << " ";
+        //Stack.pop();
+    //}
 
     delete[] visited;
     return Stack;
@@ -96,7 +96,8 @@ int main() {
 
     // Store the tasks in a vector of strings
     std::vector<std::string> tasks;
-    std::cout << "Enter the tasks one by one:" << std::endl;
+    std::cout << "Total number of Tasks to enter (" << n << ")" << std::endl;
+    std::cout << "Enter the tasks one at a time, hitting enter after each task to confirm:" << std::endl;
     for (int i = 1; i < n + 1; ++i) {
         std::string task;
         std::getline(std::cin, task);  // Read the whole line including spaces
@@ -125,10 +126,19 @@ int main() {
     // The topological sort will return a stack of indices representing tasks
     std::stack<int> sortedTasks = g.topologicalSort();
 
-    // Print out the task names in topological order
+    int order = 1;
+
+    // Create a vector to store the sorted task indices
+    std::vector<int> sortedTaskIndices;
     while (!sortedTasks.empty()) {
-        std::cout << tasks[sortedTasks.top() - 1] << std::endl;
+        sortedTaskIndices.push_back(sortedTasks.top());
         sortedTasks.pop();
+    }
+
+    // Print out the task names in topological order along with their order
+    for (int index : sortedTaskIndices) {
+        std::cout << order << ". " << tasks[index - 1] << std::endl;
+        order++;
     }
 
     return 0;
